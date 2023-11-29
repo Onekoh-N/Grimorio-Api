@@ -29,9 +29,9 @@
         }
     ],
     "procedimientos": [
-        {"precedimiento": "procedimiento de prueba 1", "imgUrl": "URL para el Procedimiento"},
-        {"precedimiento": "procedimiento de prueba 2", "imgUrl": "URL para el Procedimiento"}
-    ],
+    {"procedimiento": "procedimiento de prueba 1", "imgUrl": "URL para el Procedimiento"},
+    {"procedimiento": "procedimiento de prueba 2", "imgUrl": "URL para el Procedimiento"}
+],
     "tiempoCoccion": "1h",
     "temperaturaCoccion": "180°C",
     "autorId": "autor de prueba",
@@ -40,6 +40,5 @@
         {"autorId":"autor de prueba","comentario":"Comentario de prueba"},
         {"autorId":"autor de prueba 2","comentario":"Comentario de prueba 2"}
     ],
-    "imgUrl":"URL para el Procedimiento",
-    "publico": true
+    "imgUrl":"URL para el Procedimiento"
 }
