@@ -23,6 +23,14 @@ export class RecetasService {
         return recetas;        
     }
 
+    async listarRecetasPorAutor(options:PaginationOptions, autorId: number): Promise<RecetaInterface[]>{
+        const camposSelect = options.select ? options.select.split(','):[];        
+        options.select = camposSelect.join(' ');
+        const recetas= await this.recetasModel.paginate({autorId: autorId}, options);
+        return recetas;        
+    }
+
+
     async buscarReceta(recetaId: string): Promise<RecetaInterface>{
         const receta= await this.recetasModel.findById(recetaId);
         return receta;

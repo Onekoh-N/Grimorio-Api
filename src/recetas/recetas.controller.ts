@@ -23,11 +23,16 @@ export class RecetasController {
     }
 
     @Get()
-    async listarRecetasPaginacion(@Res() res, @Query() options : PaginationOptions){        
+    async listarRecetas(@Res() res, @Query() options : PaginationOptions){        
         const listadoRecetas = await this.recetasService.listarRecetas(options);        
         return res.status(HttpStatus.OK).json(listadoRecetas);
     }
 
+    @Get('/autor/:autorId')
+    async listarRecetasPorAutor(@Res() res, @Query() options : PaginationOptions, @Param('autorId') autorId){
+        const listadoRecetas = await this.recetasService.listarRecetasPorAutor(options, autorId);        
+        return res.status(HttpStatus.OK).json(listadoRecetas);
+    }
 
 
     @Get("/:recetaId")
