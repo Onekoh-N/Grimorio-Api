@@ -1,5 +1,3 @@
-
-
 export interface RecetaInterface{
     readonly nombre: string;
     readonly secciones: Seccion[];

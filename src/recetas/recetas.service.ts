@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { RecetaInterface } from './interfaces/receta.interface';
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
 import { RecetaDTO } from './dto/receta.dto';
+import { recetasModel } from './schemas/receta.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { PaginationOptions } from './interfaces/PaginationOptions.Interface';
 
 
 @Injectable()
 export class RecetasService {
-    constructor(
-        @InjectModel("Recetas" )
-        private readonly recetasModel: Model<RecetaInterface>
-        ) {}
+    constructor(@InjectModel('Recetas')
+    private readonly recetasModel) {}
 
     async CrearReceta (recetaDTO: RecetaDTO): Promise<RecetaInterface>{
         const receta = new this.recetasModel(recetaDTO);
-        return await receta.save();
-        
+        return await receta.save();        
     }
 
-    async listarRecetas(): Promise<RecetaInterface[]>{
-        const recetas= await this.recetasModel.find();
+    async listarRecetas(options:PaginationOptions): Promise<RecetaInterface[]>{
+        const camposSelect = options.select ? options.select.split(','):[];        
+        options.select = camposSelect.join(' ');   
+        const recetas= await this.recetasModel.paginate({}, options);
         return recetas;        
     }
 
@@ -33,13 +33,14 @@ export class RecetasService {
         return recetaModificada;
     }
 
-    async eliminarReceta(recetaId: string):Promise<RecetaInterface>{
+    async eliminarReceta(recetaId: string):Promise<any>{
         const recetaEliminada = await this.recetasModel.findByIdAndDelete(recetaId);
+        console.log(recetaEliminada)
         return recetaEliminada;
     }
 
     async recetasPorAutor(autorId): Promise<RecetaInterface[]>{
-        const recetasPorAutor = await this.recetasModel.find({autorId: autorId});
+        const recetasPorAutor = await recetasModel.find({autorId: autorId});
         return recetasPorAutor;
     }
 

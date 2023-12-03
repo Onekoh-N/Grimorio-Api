@@ -1,123 +1,38 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { Schema } from 'mongoose';
+const mongoosePaginate = require('mongoose-paginate-v2');
+import { RecetaInterface } from '../interfaces/receta.interface';
 
 
-export type RecetaDocument = Receta & Document;
-
-@Schema({ _id: false })
-export class Ingrediente {
-    @Prop({ required: true })
-    nombre: string;
-
-    @Prop({ required: true })
-    cantidad: number;
-}
-@Schema({ _id: false })
-export class Seccion {
-    @Prop({ required: true })
-    titulo: string;
-
-    @Prop({ type: [{ type: SchemaFactory.createForClass(Ingrediente) }] })
-    ingredientes: Ingrediente[];
-}
-
-@Schema({ _id: false })
-export class Procedimientos {
-    @Prop({ required: true })
-    procedimiento: string;
-
-    @Prop({ required: true })
-    imgUrl: string;
-
-}
-
-@Schema({ _id: false })
-export class Comentarios {
-    @Prop({ required: true })
-    autorId: string;
-
-    @Prop({ required: true })
-    comentario: string;
-
-    @Prop({ required: true, default: Date.now })
-    fechaCreacion: Date;
-}
-
-@Schema()
-export class Receta {
-    @Prop({
-        type: String,
-        required: true
-    })
-    nombre: string;
-
-    @Prop({
-        type: [{
-            type: SchemaFactory.createForClass(Seccion)
-        }],
-        required: true
-    })
-    secciones: Seccion[];
-
-    @Prop({
-        type: [{
-            type: SchemaFactory.createForClass(Procedimientos)
-        }],
-        required: true
-    })
-    procedimientos: Procedimientos[];
-
-    @Prop({
-        type: String,
-        required: true,
-        default: "-"
-    })
-    tiempoCoccion: string;
-
-    @Prop({
-        type: String,
-        required: true,
-        default: "-"
-    })
-    temperaturaCoccion: string;
-
-    @Prop({
-        type: String,
-        required: true
-    })
-    autorId: string;
-
-    @Prop({
-        type: [String]
-    })
-    aclaracionesAutor: string[];
-
-    @Prop({
-        type: [{
-            type: SchemaFactory.createForClass(Comentarios)
+export const RecetaSchema = new Schema({
+    nombre: String,
+    secciones: [{ 
+        titulo: String, 
+        ingredientes: [{ 
+            nombre: String, 
+            cantidad: Number
         }]
-    })
-    comentarios: Comentarios[];
+    }],
+    procedimientos: [{ 
+        procedimiento: String, 
+        imgUrl: String 
+    }],
+    tiempoCoccion: String,
+    temperaturaCoccion: String,
+    autorId: String,
+    aclaracionesAutor: [String],
+    comentarios: [{ 
+        autorId: String, 
+        comentario: String, 
+        fechaCreacion: { type: Date, default: Date.now } 
+    }],
+    imgUrl: String,
+    oculto: Boolean,
+    fechaCreacion: { type: Date, default: Date.now }
+})
 
-    @Prop({
-        type: String
-    })
-    imgUrl: string;
-
-    @Prop({
-        type: Boolean
-    })
-    publico: boolean;
-
-
-    @Prop({
-        type: Date,
-        required: true,
-        default: Date.now
-    })
-    fechaCreacion: Date;
-
-}
+RecetaSchema.plugin(mongoosePaginate);
 
 
-export const RecetaSchema = SchemaFactory.createForClass(Receta);
+export const recetasModel = mongoose.model<RecetaInterface>('Recetas', RecetaSchema);
+    
 
