@@ -5,31 +5,31 @@ import { Rol } from "src/roles/schemas/rol.schema";
 const mongoosePaginate = require('mongoose-paginate-v2');
 
 
-export type UsuarioDocument = HydratedDocument<Usuario>;
 
 @Schema()
 export class Usuario {
     @Prop()
     usuario: string;
-
+    
     @Prop()
     password: string;
-
+    
     @Prop()
     email: string;
-
+    
     // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Rol' })
     // rol: Rol
     @Prop()
     rol: string
-
+    
     @Prop({ type: Date, default: Date.now })
     fechaCreacion: Date;
-
+    
     @Prop({ type: Date, default: Date.now })
     fechaActualizacion: Date;
 }
 
+export type UsuarioDocument = HydratedDocument<Usuario>;
 export const UsuariosSchema = SchemaFactory.createForClass(Usuario);
 UsuariosSchema.plugin(mongoosePaginate);
 

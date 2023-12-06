@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RecetaInterface } from './interfaces/receta.interface';
 import { RecetaDTO } from './dto/receta.dto';
-import { recetasModel } from './schemas/receta.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaginationOptions } from './interfaces/PaginationOptions.Interface';
 
@@ -22,6 +21,7 @@ export class RecetasService {
         const recetas= await this.recetasModel.paginate({}, options);
         return recetas;        
     }
+    
 
     async listarRecetasPorAutor(options:PaginationOptions, autorId: number): Promise<RecetaInterface[]>{
         const camposSelect = options.select ? options.select.split(','):[];        
