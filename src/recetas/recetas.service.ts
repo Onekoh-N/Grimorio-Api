@@ -46,10 +46,4 @@ export class RecetasService {
         console.log(recetaEliminada)
         return recetaEliminada;
     }
-
-    async recetasPorAutor(autorId): Promise<RecetaInterface[]>{
-        const recetasPorAutor = await recetasModel.find({autorId: autorId});
-        return recetasPorAutor;
-    }
-
 }

@@ -1,7 +1,6 @@
 import { Body, Controller, HttpStatus, Post, Get, Res, Param, BadRequestException, Put, NotFoundException, Delete, Query } from '@nestjs/common';
 import { RecetasService } from './recetas.service';
 import { RecetaDTO } from './dto/receta.dto';
-import { query } from 'express';
 import { PaginationOptions } from './interfaces/PaginationOptions.Interface';
 
 @Controller('recetas')
