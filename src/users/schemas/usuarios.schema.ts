@@ -25,7 +25,7 @@ export class Usuario {
     @Prop({ type: Date, default: Date.now })
     fechaCreacion: Date;
     
-    @Prop({ type: Date, default: Date.now })
+    @Prop({ type: Date})
     fechaActualizacion: Date;
 }
 

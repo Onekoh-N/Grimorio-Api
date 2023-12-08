@@ -27,14 +27,8 @@ export class UsuariosController {
         return res.status(HttpStatus.OK).json(listadoUsuarios);
     }
 
-    @Get('/usuario/:usuarioId')
-    async listarUsuariosPorUsuario(@Res() res, @Query() options: PaginationOptions, @Param('usuarioId') usuarioId) {
-        const listadoUsuarios = await this.usuariosService.listarUsuariosPorUsuario(options, usuarioId);
-        return res.status(HttpStatus.OK).json(listadoUsuarios);
-    }
-
     @Get("/:usuarioId")
-    async buscarUsuario(@Res() res, @Param("usuarioId") usuarioId) {
+    async buscarPorId(@Res() res, @Param("usuarioId") usuarioId) {
         try {
             const usuario = await this.usuariosService.buscarUsuario(usuarioId);
             if (!usuario) throw new NotFoundException('Usuario no encontrada');

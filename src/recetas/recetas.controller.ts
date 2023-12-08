@@ -2,6 +2,7 @@ import { Body, Controller, HttpStatus, Post, Get, Res, Param, BadRequestExceptio
 import { RecetasService } from './recetas.service';
 import { RecetaDTO } from './dto/receta.dto';
 import { PaginationOptions } from './interfaces/PaginationOptions.Interface';
+import { TagsDTO } from './dto/tags.DTO';
 
 @Controller('recetas')
 export class RecetasController {
@@ -10,7 +11,6 @@ export class RecetasController {
     @Post()
     async crearReceta(@Res() res, @Body() recetasDTO: RecetaDTO) {
         try {
-
             const recetaCreada = await this.recetasService.CrearReceta(recetasDTO);
             return res.status(HttpStatus.OK).json({
                 recetaCreada: recetaCreada
@@ -22,19 +22,26 @@ export class RecetasController {
     }
 
     @Get()
-    async listarRecetas(@Res() res, @Query() options : PaginationOptions){        
-        const listadoRecetas = await this.recetasService.listarRecetas(options);        
-        return res.status(HttpStatus.OK).json(listadoRecetas);
+    async listarRecetas(@Res() res,@Body() body: TagsDTO){        
+        try {
+            const listadoRecetas = await this.recetasService.buscarRecetasPorTag(body);
+            return res.status(HttpStatus.OK).json(listadoRecetas);
+        } catch (e) {
+            throw new NotFoundException('Error al buscar las recetas por tag');
+        }
     }
 
     @Get('/autor/:autorId')
     async listarRecetasPorAutor(@Res() res, @Query() options : PaginationOptions, @Param('autorId') autorId){
-        const listadoRecetas = await this.recetasService.listarRecetasPorAutor(options, autorId);        
-        return res.status(HttpStatus.OK).json(listadoRecetas);
+        try {
+            const listadoRecetas = await this.recetasService.listarRecetasPorAutor(options, autorId);
+            return res.status(HttpStatus.OK).json(listadoRecetas);
+        } catch (e) {
+            throw new NotFoundException('Error al listar las recetas por autor');
+        }
     }
 
-
-    @Get("/:recetaId")
+    @Get("buscarReceta/:recetaId")
     async buscarReceta(@Res() res, @Param("recetaId") recetaId) {
         try {
             const receta = await this.recetasService.buscarReceta(recetaId);
@@ -67,4 +74,15 @@ export class RecetasController {
         }
     }
 
+    @Get('/recetasportags')
+    async recetasPorTag(@Res() res,@Body() body: TagsDTO){
+        try {
+            const listadoRecetas = await this.recetasService.buscarRecetasPorTag(body);
+            return res.status(HttpStatus.OK).json(listadoRecetas);
+        } catch (e) {
+            throw new NotFoundException('Error al buscar las recetas por tag');
+        }
+    }
+
+    
 }

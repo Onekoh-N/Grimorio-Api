@@ -9,7 +9,9 @@ export interface RecetaInterface{
     readonly comentarios: Comentarios[];
     readonly imgUrl: string;
     readonly publico: boolean;
-    readonly fechaCreacion: Date  
+    readonly tags: string[];
+    readonly fechaCreacion: Date;
+    fechaActualizacion: Date;  
 }
 export interface Seccion{
     readonly titulo: string;

@@ -4,7 +4,7 @@ import { HydratedDocument } from "mongoose";
 export type CategoriaDocument = HydratedDocument<Categoria>
 
 @Schema()
-export class Categoria{
+class Categoria{
     @Prop()
     nombre: string;
 

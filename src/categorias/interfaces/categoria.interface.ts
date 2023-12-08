@@ -1,1 +1,4 @@
-export interface Categorias {}
+export interface CategoriaInterface {    
+    readonly nombre: string;
+    readonly descripcion: string;
+}

@@ -19,14 +19,6 @@ export class UsuariosService {
         return usuarios;        
     }
 
-    async listarUsuariosPorUsuario(options:PaginationOptions, usuario: string): Promise<UsuarioInterface[]>{
-        const camposSelect = options.select ? options.select.split(','):[];        
-        options.select = camposSelect.join(' ');
-        const usuarios= await this.usuarioModel.paginate({usuario: usuario}, options);
-        return usuarios;        
-    }
-
-
     async buscarUsuario(usuarioId: string): Promise<UsuarioInterface>{
         const usuario= await this.usuarioModel.findById(usuarioId);
         return usuario;
@@ -43,7 +35,4 @@ export class UsuariosService {
         const usuarioEliminada = await this.usuarioModel.findByIdAndDelete(usuarioId);
         return usuarioEliminada;
     }
-
-
-
 }
