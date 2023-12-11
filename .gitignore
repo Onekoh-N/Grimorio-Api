@@ -35,3 +35,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 TODO.md
+src/recetas/dto/busqueda.DTO.JSON

@@ -42,7 +42,7 @@ export class RecetasController {
     }
 
     @Get("buscarReceta/:recetaId")
-    async buscarReceta(@Res() res, @Param("recetaId") recetaId) {
+    async buscarporId(@Res() res, @Param("recetaId") recetaId) {
         try {
             const receta = await this.recetasService.buscarReceta(recetaId);
             if (!receta) throw new NotFoundException('Receta no encontrada');
@@ -74,15 +74,7 @@ export class RecetasController {
         }
     }
 
-    @Get('/recetasportags')
-    async recetasPorTag(@Res() res,@Body() body: TagsDTO){
-        try {
-            const listadoRecetas = await this.recetasService.buscarRecetasPorTag(body);
-            return res.status(HttpStatus.OK).json(listadoRecetas);
-        } catch (e) {
-            throw new NotFoundException('Error al buscar las recetas por tag');
-        }
-    }
+
 
     
 }

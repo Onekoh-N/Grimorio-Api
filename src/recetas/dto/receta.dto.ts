@@ -9,7 +9,7 @@ export class RecetaDTO{
     readonly comentarios: Comentarios[];
     readonly imgUrl: string;
     readonly publico: boolean;
-     tags: string[];
+    tags: string[];
     readonly fechaCreacion: Date;
     fechaActualizacion: Date;
 }

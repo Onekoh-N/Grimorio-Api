@@ -53,7 +53,7 @@ class Receta {
     imgUrl: String;
     @Prop({type: Boolean, default: false})
     oculto: boolean;
-    @Prop({type: [String]})
+    @Prop({type: [String], default: ["UNTAGGED"]})
     tags: string[];
     @Prop({ type: Date, default: Date.now })
     fechaCreacion: Date;
