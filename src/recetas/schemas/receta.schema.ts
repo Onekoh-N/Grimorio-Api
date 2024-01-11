@@ -4,55 +4,54 @@ import { HydratedDocument } from "mongoose";
 
 @Schema({ _id: false })
 class ingrediente {
+    @Prop({ type: String, required: true })
     nombre: String;
+    @Prop({ type: Number, required: true })
     cantidad: Number;
 }
 @Schema({ _id: false })
 class seccion {
-    @Prop()
+    @Prop({ type: String, required: true })
     titulo: String;
-    @Prop()
+    @Prop({ type: [ingrediente], required: true })
     ingredientes: ingrediente[];
 
 }
 @Schema({ _id: false })
 class procedimiento{
-    @Prop()
+    @Prop({ type: String, required: true })
     procedimiento: String;
-    @Prop()
-    imgUrl: String
 }
+
 @Schema({_id:false})
 class comentario{
-    @Prop()
+    @Prop({ type: String, required: true })
     autorId: String;
-    @Prop()
+    @Prop({ type: String, required: true })
     comentario: String;
     @Prop({ type: Date, default: Date.now })
     fechaCreacion: Date;
 }
 @Schema()
 class Receta {
-    @Prop()
+    @Prop( { type: String, required: true })
     nombre: String;
-    @Prop()
+    @Prop({ type: [seccion], required: true })
     secciones: seccion[];
-    @Prop()
+    @Prop({ type: [procedimiento], required: true })
     procedimientos: procedimiento[];
-    @Prop()
+    @Prop({ type: String})
     tiempoCoccion: String;
-    @Prop()
+    @Prop({ type: String})
     temperaturaCoccion: String;
-    @Prop()
+    @Prop({ type: String, required: true })
     autorId: String;
-    @Prop()
+    @Prop({ type: [String], default: [] })
     aclaracionesAutor: [String];
-    @Prop()
+    @Prop({ type: [comentario], default: [] })
     comentarios: comentario[];
-    @Prop()
-    imgUrl: String;
     @Prop({type: Boolean, default: false})
-    oculto: boolean;
+    publico: boolean;
     @Prop({type: [String], default: ["UNTAGGED"]})
     tags: string[];
     @Prop({ type: Date, default: Date.now })

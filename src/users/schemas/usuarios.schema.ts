@@ -8,19 +8,17 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 @Schema()
 export class Usuario {
-    @Prop()
+    @Prop({ unique: true, required: true })
     usuario: string;
     
-    @Prop()
+    @Prop({ required: true })
     password: string;
     
-    @Prop()
-    email: string;
-    
-    // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Rol' })
-    // rol: Rol
-    @Prop()
-    rol: string
+    @Prop({ unique: true, required: true })
+    email: string;    
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Rol', required: true })
+    rol: string;
     
     @Prop({ type: Date, default: Date.now })
     fechaCreacion: Date;

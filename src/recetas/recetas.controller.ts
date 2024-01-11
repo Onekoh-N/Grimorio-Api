@@ -2,7 +2,6 @@ import { Body, Controller, HttpStatus, Post, Get, Res, Param, BadRequestExceptio
 import { RecetasService } from './recetas.service';
 import { RecetaDTO } from './dto/receta.dto';
 import { PaginationOptions } from './interfaces/PaginationOptions.Interface';
-import { TagsDTO } from './dto/tags.DTO';
 
 @Controller('recetas')
 export class RecetasController {
@@ -17,17 +16,17 @@ export class RecetasController {
             })
         } catch (e) {
             console.log(e);
-            throw new BadRequestException("Algo salio mal :/");
+            throw new BadRequestException(e.message);
         }
     }
 
     @Get()
-    async listarRecetas(@Res() res,@Body() body: TagsDTO){        
+    async listarRecetas(@Res() res, @Query() opciones: PaginationOptions){     
         try {
-            const listadoRecetas = await this.recetasService.buscarRecetasPorTag(body);
+            const listadoRecetas = await this.recetasService.buscarRecetasConOpciones(opciones);
             return res.status(HttpStatus.OK).json(listadoRecetas);
         } catch (e) {
-            throw new NotFoundException('Error al buscar las recetas por tag');
+            throw new NotFoundException('Error al listar Recetas');
         }
     }
 
@@ -41,7 +40,7 @@ export class RecetasController {
         }
     }
 
-    @Get("buscarReceta/:recetaId")
+    @Get(":recetaId")
     async buscarporId(@Res() res, @Param("recetaId") recetaId) {
         try {
             const receta = await this.recetasService.buscarReceta(recetaId);
@@ -74,7 +73,4 @@ export class RecetasController {
         }
     }
 
-
-
-    
 }

@@ -41,6 +41,5 @@
         {"autorId":"autor de prueba 2","comentario":"Comentario de prueba 2"}
     ],
     "publico": true,
-    "tags": ["Dulce", "Saldo"],
-    "imgUrl":"URL para el Procedimiento"
+    "tags": ["Dulce", "Saldo"]
 }

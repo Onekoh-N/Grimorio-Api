@@ -1,4 +1,5 @@
 export class RolDTO {
-    readonly nombre: string;     
+    readonly _id?: string;
+    nombre: string;     
     readonly descripcion: string;
 }

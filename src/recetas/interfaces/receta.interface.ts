@@ -7,9 +7,8 @@ export interface RecetaInterface{
     readonly autorId: string;
     readonly aclaracionesAutor: string[];
     readonly comentarios: Comentarios[];
-    readonly imgUrl: string;
     readonly publico: boolean;
-    readonly tags: string[];
+    readonly tags?: string[];
     readonly fechaCreacion: Date;
     fechaActualizacion: Date;  
 }

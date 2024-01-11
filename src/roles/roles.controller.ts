@@ -1,6 +1,7 @@
 import { Body, Controller, HttpStatus, Post, Get, Res, Param, BadRequestException, Put, NotFoundException, Delete, Query } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { RolDTO } from './dto/rol.dto';
+import { PaginationOptions } from 'src/recetas/interfaces/PaginationOptions.Interface';
 
 @Controller('rol')
 export class RolesController {
@@ -16,13 +17,13 @@ export class RolesController {
             })
         } catch (e) {
             console.log(e);
-            throw new BadRequestException("Algo salio mal :/");
+            throw new BadRequestException(e.message);
         }
-    }
+    } 
 
     @Get('/list')
-    async listarRoles(@Res() res) {
-        const listadoRoles = await this. rolesService.listarRoles();
+    async listarRoles(@Res() res, @Query() opciones: PaginationOptions) {
+        const listadoRoles = await this. rolesService.listarRoles(opciones);
         return res.status(HttpStatus.OK).json(listadoRoles);
     }
 
@@ -50,12 +51,12 @@ export class RolesController {
 
     @Delete('/')
     async eliminarRol(@Res() res, @Query('rolid') rolId) {
-        try {
-            const  rolEliminada = await this.rolesService.eliminarRol(rolId);
-            if (! rolEliminada) throw new NotFoundException('Rol no encontrada');
+        try {            
+            const rolEliminada = await this.rolesService.eliminarRol(rolId);
+            if (!rolEliminada) throw new NotFoundException('Rol no encontrada');
             return res.status(HttpStatus.OK).json("Rol Eliminada");
         } catch (e) {
-            throw new NotFoundException('Rol no encontrada');
+            throw new NotFoundException(e.message);
         }
     }
 
