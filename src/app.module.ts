@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RecetasModule } from './Modulos/recetas/recetas.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { RolesModule } from './Modulos/roles/roles.module';
 import { CategoriasModule } from './Modulos/categorias/categorias.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthController } from './auth/auth.controller';
@@ -17,7 +16,6 @@ import { JWT_SECRET } from './auth/const/jwt.constant';
   imports: [
     RecetasModule, 
     MongooseModule.forRoot('mongodb://localhost/recetas-Api'), 
-    RolesModule, 
     CategoriasModule, 
     AuthModule, 
     UsuariosModule,

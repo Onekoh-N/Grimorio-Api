@@ -3,9 +3,11 @@ import { AuthService } from './auth.service';
 import { LoginDTO } from './dto/login.dto';
 import { Console } from 'console';
 import { AuthGuard } from './guard/auth.guard';
-import { Rol } from 'src/decorators/roles.decorator';
+import { RolDecorator } from 'src/decorators/roles.decorator';
 import { UsuarioDTO } from 'src/Modulos/users/dto/usuarios.dto';
 import { RolesGuard } from './guard/roles.guard';
+import { Rol } from 'src/Modulos/users/roles/roles.enum';
+import { RegisterDTO } from './dto/register.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -17,7 +19,7 @@ export class AuthController {
     }
 
     @Post('register')
-    async register(@Res() res, @Body() registerDTO: UsuarioDTO) {
+    async register(@Res() res, @Body() registerDTO: RegisterDTO) {
 
         try {            
             const usuarioCreada = await this._authService.register(registerDTO);
@@ -36,7 +38,7 @@ export class AuthController {
     }
 
     @Get('prueba')
-    @Rol('usuario')
+    @RolDecorator(Rol.USER)
     @UseGuards(AuthGuard, RolesGuard)
     prueba(@Req() req) {
         return req.user;

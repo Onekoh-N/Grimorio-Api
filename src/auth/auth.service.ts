@@ -4,6 +4,7 @@ import { LoginDTO } from './dto/login.dto';
 import { UsuarioDTO } from 'src/Modulos/users/dto/usuarios.dto';
 import { compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
+import { RegisterDTO } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -29,10 +30,10 @@ export class AuthService {
     }
 
 
-    register(usuarioDTO: UsuarioDTO) {
+    register(registerDTO: RegisterDTO) {
 
         try {
-            const usuarioRegistrado = this._usersService.CrearUsuario(usuarioDTO);
+            const usuarioRegistrado = this._usersService.CrearUsuario(registerDTO);
             return usuarioRegistrado;            
         } catch (error) {
             throw new BadRequestException(error.message);

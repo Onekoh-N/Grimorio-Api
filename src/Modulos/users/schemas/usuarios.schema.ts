@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { Rol } from "../roles/roles.enum";
 const mongoosePaginate = require('mongoose-paginate-v2');
 
 
@@ -15,8 +16,8 @@ export class Usuario {
     @Prop({ unique: true, required: true })
     email: string;    
 
-    @Prop({default: 'usuario'})
-    rol: string;
+    @Prop({default: 'user', enum: Rol})
+    rol: Rol;
     
     @Prop({ type: Date, default: Date.now })
     fechaCreacion: Date;
