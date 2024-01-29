@@ -20,7 +20,7 @@ export class AuthService {
             if (!usuarioEncontrado) {throw new UnauthorizedException('Credenciales incorrectas');}
             const validarPassword = await compare(registerDTO.password, usuarioEncontrado.password);
             if (!validarPassword) {throw new UnauthorizedException('Credenciales incorrectas');}     
-            const payload = {email: usuarioEncontrado.email}; 
+            const payload = {email: usuarioEncontrado.email, rol: usuarioEncontrado.rol};  //Informacion del usuario que se envia en el token
             const token = await this._jwtService.signAsync(payload);
             return {email : usuarioEncontrado.email, rol: usuarioEncontrado.rol, token};
         } catch (error) {

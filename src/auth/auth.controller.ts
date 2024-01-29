@@ -5,6 +5,7 @@ import { Console } from 'console';
 import { AuthGuard } from './guard/auth.guard';
 import { Rol } from 'src/decorators/roles.decorator';
 import { UsuarioDTO } from 'src/Modulos/users/dto/usuarios.dto';
+import { RolesGuard } from './guard/roles.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -35,8 +36,8 @@ export class AuthController {
     }
 
     @Get('prueba')
-    @Rol('admin')
-    @UseGuards(AuthGuard)
+    @Rol('usuario')
+    @UseGuards(AuthGuard, RolesGuard)
     prueba(@Req() req) {
         return req.user;
     }

@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
         secret: JWT_SECRET,                               //Verifica el token con la clave secreta
       });
 
-      request['user'] = payload;                          //Guarda "payload" en la peticion con el nombre "user"
+      request['user'] = payload;                          //Guarda el "payload" en la peticion con el nombre "user"
     } catch {
       throw new UnauthorizedException();
     }
