@@ -1,9 +1,3 @@
-## Tags
-## Busqueda por:
-	- Nombre de receta
-	- Nombre autor
-	- Categoria
-	- Tag
 ## Relaciones entre documentos
 ## Seguridad
 ## Toquens
