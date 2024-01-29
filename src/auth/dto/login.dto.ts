@@ -1,6 +1,6 @@
 
 import { IsString, IsEmail, MinLength, Validate } from "class-validator";
-import { NoWhitespace } from "../../utilidades/noWithespace.validator";
+import { NoWhitespace } from "../../utilidades/decorators/noWithespace.decorator";
 
 export  class LoginDTO {
     @IsEmail()

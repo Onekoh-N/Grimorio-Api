@@ -1,6 +1,6 @@
 import { IsDate, IsEmail, IsEnum, IsOptional, IsString, MinLength, Validate } from "class-validator";
 import { Rol } from "../roles/roles.enum";
-import { NoWhitespace } from "src/utilidades/noWithespace.validator";
+import { NoWhitespace } from "src/utilidades/decorators/noWithespace.decorator";
 export class UsuarioEditadoDTO {
     @IsString()
     @MinLength(3)
