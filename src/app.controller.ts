@@ -10,5 +10,10 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Get('/amor')
+  getPrueba(): string {
+    return "Hola Marce, te extraño";
+  }
+
 
 }
