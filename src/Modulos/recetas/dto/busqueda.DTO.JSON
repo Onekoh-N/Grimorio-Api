@@ -1,0 +1,14 @@
+{
+    "nombre": "nico",
+    "autorId": 12345,
+    "tags": [],
+    "page": 1,
+    "limit": 100,
+    "sort": "-nombre",
+    "select": [
+        "nombre",
+        "autorId",
+        "tags"
+    ],
+    "offset": 0
+}
