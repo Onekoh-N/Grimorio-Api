@@ -3,7 +3,6 @@ import { CategoriasService } from './categorias.service';
 import { CategoriasController } from './categorias.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CategoriaSchema } from './schemas/categoria.schema';
-import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({

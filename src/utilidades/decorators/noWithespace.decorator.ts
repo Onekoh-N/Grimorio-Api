@@ -2,7 +2,7 @@ import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface 
 
 @ValidatorConstraint({ name: 'noWhitespace', async: false })
 export class NoWhitespace implements ValidatorConstraintInterface {
-    validate(value: any, args: ValidationArguments) {
+    validate(value: string, args: ValidationArguments) {
         if (typeof value !== 'string') {
             return false;
         }

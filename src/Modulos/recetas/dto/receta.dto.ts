@@ -1,4 +1,4 @@
-import { IsArray, IsBoolean, IsDate, IsNumber, IsOptional, IsString, isDate } from "class-validator";
+import { IsArray, IsBoolean, IsDate, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class RecetaDTO{
     @IsString()

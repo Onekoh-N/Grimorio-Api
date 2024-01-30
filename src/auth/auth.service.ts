@@ -4,7 +4,6 @@ import { LoginDTO } from './dto/login.dto';
 import { compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDTO } from './dto/register.dto';
-import { JWT_SECRET } from './const/jwt.constant';
 
 @Injectable()
 export class AuthService {
