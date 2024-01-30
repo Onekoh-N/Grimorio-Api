@@ -3,6 +3,8 @@ import { UsuarioDTO } from './dto/usuarios.dto';
 import { UsuariosService } from './usuarios.service';
 import { PaginationOptions } from './interfaces/PaginationOptions.Interface';
 import { UsuarioEditadoDTO } from './dto/usuarioEditado.dto';
+import { Auth } from 'src/utilidades/decorators/auth.decorator';
+import { Rol } from './roles/roles.enum';
 
 @Controller('usuarios')
 export class UsuariosController {
@@ -10,18 +12,21 @@ export class UsuariosController {
     constructor(private usuariosService: UsuariosService) { }
 
     @Post()
+    @Auth(Rol.ADMIN)
     async crearUsuario(@Res() res, @Body() usuariosDTO: UsuarioDTO) {
         const usuarioCreada = await this.usuariosService.CrearUsuario(usuariosDTO);
         return res.status(HttpStatus.OK).json({ usuarioCreado: usuarioCreada }); 
     }
 
     @Get()
+    @Auth(Rol.ADMIN)
     async listarUsuarios(@Res() res, @Query() options: PaginationOptions) {
         const listadoUsuarios = await this.usuariosService.listarUsuarios(options);
         return res.status(HttpStatus.OK).json(listadoUsuarios);
     }
 
     @Get("/:usuarioId")
+    @Auth(Rol.ADMIN)
     async buscarPorId(@Res() res, @Param("usuarioId") usuarioId) {
         try {
             const usuario = await this.usuariosService.buscarUsuario(usuarioId);
@@ -33,6 +38,7 @@ export class UsuariosController {
     }
 
     @Put("/:usuarioId")
+    @Auth(Rol.ADMIN)
     async editarUsuario(@Res() res, @Param("usuarioId") usuarioId, @Body() usuarioEditado: UsuarioEditadoDTO) {
         
         const usuarioEditada = await this.usuariosService.modificarUsuario(usuarioId, usuarioEditado);
@@ -42,6 +48,7 @@ export class UsuariosController {
     }
 
     @Delete('/')
+    @Auth(Rol.ADMIN)
     async eliminarUsuario(@Res() res, @Query('usuarioid') usuarioId) {
         try {
             const usuarioEliminada = await this.usuariosService.eliminarUsuario(usuarioId);
@@ -54,6 +61,7 @@ export class UsuariosController {
 
     ///////// 
     @Delete('/borrarTodo')
+    @Auth(Rol.ADMIN)
     async eliminarTodo() {
         try {
             const usuriosEliminados = await this.usuariosService.eliminarTodosLosUsuarios();

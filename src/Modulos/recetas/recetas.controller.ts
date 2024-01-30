@@ -2,12 +2,15 @@ import { Body, Controller, HttpStatus, Post, Get, Res, Param, BadRequestExceptio
 import { RecetasService } from './recetas.service';
 import { RecetaDTO } from './dto/receta.dto';
 import { PaginationOptions } from './interfaces/PaginationOptions.Interface';
+import { Auth } from 'src/utilidades/decorators/auth.decorator';
+import { Rol } from '../users/roles/roles.enum';
 
 @Controller('recetas')
 export class RecetasController {
     constructor(private recetasService: RecetasService) { }
 
     @Post()
+    @Auth(Rol.ADMIN)
     async crearReceta(@Res() res, @Body() recetasDTO: RecetaDTO) {
         try {
             const recetaCreada = await this.recetasService.CrearReceta(recetasDTO);
@@ -21,6 +24,7 @@ export class RecetasController {
     }
 
     @Get()
+    @Auth(Rol.ADMIN)
     async listarRecetas(@Res() res, @Query() opciones: PaginationOptions){     
         try {
             const listadoRecetas = await this.recetasService.buscarRecetasConOpciones(opciones);
@@ -31,6 +35,7 @@ export class RecetasController {
     }
 
     @Get('/autor/:autorId')
+    @Auth(Rol.ADMIN)
     async listarRecetasPorAutor(@Res() res, @Query() options : PaginationOptions, @Param('autorId') autorId){
         try {
             const listadoRecetas = await this.recetasService.listarRecetasPorAutor(options, autorId);
@@ -41,6 +46,7 @@ export class RecetasController {
     }
 
     @Get(":recetaId")
+    @Auth(Rol.ADMIN)
     async buscarporId(@Res() res, @Param("recetaId") recetaId) {
         try {
             const receta = await this.recetasService.buscarReceta(recetaId);
@@ -52,6 +58,7 @@ export class RecetasController {
     }
 
     @Put("/:recetaId")
+    @Auth(Rol.ADMIN)
     async editarReceta(@Res() resizeBy, @Param("recetaId") recetaId, @Body() recetasDTO: RecetaDTO) {
         try {
             const recetaEditada = await this.recetasService.modificarReceta(recetaId, recetasDTO);
@@ -63,6 +70,7 @@ export class RecetasController {
     }
 
     @Delete('/')
+    @Auth(Rol.ADMIN)
     async eliminarReceta(@Res() res, @Query('recetaId') recetaId) {
         try {
             const recetaEliminada = await this.recetasService.eliminarReceta(recetaId);

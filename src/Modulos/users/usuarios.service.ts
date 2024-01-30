@@ -6,6 +6,7 @@ import { PaginationOptions } from './interfaces/PaginationOptions.Interface';
 import {hash} from 'bcryptjs';
 import { UsuarioEditadoDTO } from './dto/usuarioEditado.dto';
 import { HashPassword } from '../../utilidades/utilidades';
+import { Rol } from './roles/roles.enum';
 
 @Injectable()
 export class UsuariosService {
@@ -64,8 +65,14 @@ export class UsuariosService {
         return usuario;
     }
 
-    async eliminarTodosLosUsuarios():Promise<UsuarioInterface[]>{
+    async eliminarTodosLosUsuarios():Promise<UsuarioInterface>{
         const usuarioEliminada = await this.usuarioModel.deleteMany({});
-        return usuarioEliminada;
+        const usuarioAdmin: UsuarioDTO  = await this.CrearUsuario({
+            usuario: 'admin', 
+            password: 'admin123', 
+            email: 'admin@admin.com', 
+            rol: Rol.ADMIN, 
+            fechaCreacion: new Date()});
+        return usuarioAdmin;
     }
 }

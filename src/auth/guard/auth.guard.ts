@@ -7,16 +7,11 @@ export class AuthGuard implements CanActivate {
   constructor(private readonly _jwtService: JwtService) {} //Injection de dependencias
   async canActivate(context: ExecutionContext): Promise<boolean> { //Funcion que retorna un booleano    
     try {
-      const request = context.switchToHttp().getRequest(); //Obtiene la peticion      
-      const token = this.extractTokenFromHeader(request);  //Obtiene el token
-      if(!token){throw new UnauthorizedException();}       //Si no hay token lanza una excepcion
-      const payload = await this._jwtService.verifyAsync(  //Verifica el token
-        token, 
-        {
-        secret: JWT_SECRET,                               //Verifica el token con la clave secreta
-      });
-
-      request['user'] = payload;                          //Guarda el "payload" en la peticion con el nombre "user"
+      const request = context.switchToHttp().getRequest();        //Obtiene la peticion      
+      const token = this.extractTokenFromHeader(request);         //Obtiene el token
+      if(!token){throw new UnauthorizedException();}              //Si no hay token lanza una excepcion
+      const payload = await this._jwtService.verifyAsync(token);  //Verifica el token
+      request.user = payload;                          //Guarda el "payload" en la peticion con el nombre "user"
     } catch {
       throw new UnauthorizedException();
     }

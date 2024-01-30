@@ -10,20 +10,18 @@ import { AuthService } from './auth/auth.service';
 import { UsuariosService } from './Modulos/users/usuarios.service';
 import { UsuariosModule } from './Modulos/users/usuarios.module';
 import { JwtModule } from '@nestjs/jwt';
-import { JWT_SECRET } from './auth/const/jwt.constant';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true
+    }), 
     RecetasModule, 
-    MongooseModule.forRoot('mongodb://localhost/recetas-Api'), 
+    MongooseModule.forRoot(process.env.MONGO_URI), 
     CategoriasModule, 
     AuthModule, 
-    UsuariosModule,
-    JwtModule.register({
-      global: true,
-      secret: JWT_SECRET,
-      signOptions: { expiresIn: '1d' },
-    })
+    UsuariosModule
   ],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService, UsuariosService],

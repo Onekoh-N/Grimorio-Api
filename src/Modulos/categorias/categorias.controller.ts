@@ -2,6 +2,8 @@ import { Body, Controller, HttpStatus, Post, Get, Res, Param, BadRequestExceptio
 import { CategoriaDTO } from './dto/categoria.dto';
 import { CategoriasService } from './categorias.service';
 import { PaginationOptions } from 'src/Modulos/recetas/interfaces/PaginationOptions.Interface';
+import { Auth } from 'src/utilidades/decorators/auth.decorator';
+import { Rol } from '../users/roles/roles.enum';
 
 
 @Controller('categoria')
@@ -10,6 +12,7 @@ export class CategoriasController {
     constructor(private categoriaService: CategoriasService) { }
 
     @Post()
+    @Auth(Rol.ADMIN)
     async crearCategoria(@Res() res, @Body() categoriaDTO: CategoriaDTO) {
         try {
             const categoriaCreada = await this.categoriaService.CrearCategoria(categoriaDTO);
@@ -22,13 +25,15 @@ export class CategoriasController {
         }
     }
 
-    @Get()
+    @Get()    
+    @Auth(Rol.ADMIN)
     async listarCategoria(@Res() res, @Query() options: PaginationOptions) {
         const listadoCategoria = await this.categoriaService.listarCategorias(options);
         return res.status(HttpStatus.OK).json(listadoCategoria);
     }
 
     @Get("/:categoriaId")
+    @Auth(Rol.ADMIN)
     async buscarPorId(@Res() res, @Param("categoriaId") categoriaId) {
         try {
             const categoria = await this.categoriaService.buscarCategoria(categoriaId);
@@ -40,6 +45,7 @@ export class CategoriasController {
     }
 
     @Put("/:categoriaId")
+    @Auth(Rol.ADMIN)
     async editarCategoria(@Res() resizeBy, @Param("categoriaId") categoriaId, @Body() categoriaDTO: CategoriaDTO) {
         try {
             const categoriaEditada = await this.categoriaService.modificarCategoria(categoriaId, categoriaDTO);
@@ -51,6 +57,7 @@ export class CategoriasController {
     }
 
     @Delete('/')
+    @Auth(Rol.ADMIN)
     async eliminarCategoria(@Res() res, @Query('categoriaid') categoriaId) {
         try {
             const categoriaEliminada = await this.categoriaService.eliminarCategoria(categoriaId);
