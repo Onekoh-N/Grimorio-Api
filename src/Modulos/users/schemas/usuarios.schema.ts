@@ -8,7 +8,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 @Schema()
 export class Usuario {
     @Prop({ unique: true, required: true })
-    usuario: string;
+    userName: string;
     
     @Prop({ required: true })
     password: string;
@@ -16,7 +16,7 @@ export class Usuario {
     @Prop({ unique: true, required: true })
     email: string;    
 
-    @Prop({default: 'user', enum: Rol})
+    @Prop({default: Rol.USER, enum: Rol})
     rol: Rol;
     
     @Prop({ type: Date, default: Date.now })

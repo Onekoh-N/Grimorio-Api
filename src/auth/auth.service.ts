@@ -4,30 +4,28 @@ import { LoginDTO } from './dto/login.dto';
 import { compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDTO } from './dto/register.dto';
-import { JWT_SECRET } from './const/jwt.constant';
 
 @Injectable()
 export class AuthService {
-    constructor( 
+    constructor(
         private readonly _usersService: UsuariosService,
         private readonly _jwtService: JwtService
-        ) {}
+    ) { }
 
 
     async login(registerDTO: LoginDTO) {
-
-        try {                 
-            const usuarioEncontrado = await this._usersService.buscarUsuarioPorEmail(registerDTO.email);            
-            if (!usuarioEncontrado) {throw new UnauthorizedException('Credenciales incorrectas');}
+        try {            
+            const usuarioEncontrado = await this._usersService.buscarUsuarioPorEmail(registerDTO.email);
+            if (!usuarioEncontrado) { throw new UnauthorizedException({ "success": false, "message": "Credenciales incorrectas" }); }
             const validarPassword = await compare(registerDTO.password, usuarioEncontrado.password);
-            if (!validarPassword) {throw new UnauthorizedException('Credenciales incorrectas');}     
+            if (!validarPassword) { throw new UnauthorizedException({ "success": false, "message": "Credenciales incorrectas" }); }
             const payload = {                       //Informacion del usuario que se envia en el token
-                usuario: usuarioEncontrado.usuario,
-                email: usuarioEncontrado.email, 
+                usuario: usuarioEncontrado.userName,
+                email: usuarioEncontrado.email,
                 rol: usuarioEncontrado.rol
-            };  
+            };
             const token = await this._jwtService.signAsync(payload);
-            return {email : usuarioEncontrado.email, rol: usuarioEncontrado.rol, token};
+            return token;
         } catch (error) {
             throw error;
         }
@@ -35,13 +33,11 @@ export class AuthService {
 
 
     register(registerDTO: RegisterDTO) {
-
-        try {
-            const usuarioRegistrado = this._usersService.CrearUsuario(registerDTO);
-            return usuarioRegistrado;            
+        try {            
+            return this._usersService.CrearUsuario(registerDTO);
         } catch (error) {
             throw new BadRequestException(error.message);
         }
     }
-    
+
 }

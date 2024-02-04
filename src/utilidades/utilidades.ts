@@ -8,8 +8,3 @@ export let HashPassword = async(password: string) => {
 export let comparePassword = async(password: string, storedPassword: string) => {
     return await compare(password, storedPassword);
 }
-
-
-// export let generarJWT = (payload: any) => {
-//     return jwt.sign(payload, process.env.JWT_SECRET);
-// }

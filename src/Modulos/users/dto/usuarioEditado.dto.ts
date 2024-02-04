@@ -6,7 +6,7 @@ export class UsuarioEditadoDTO {
     @MinLength(3)
     @IsOptional()
     @Validate(NoWhitespace, { message: 'El usuario no puede contener espacios en blanco' })
-    usuario: string;
+    userName: string;
     
     @IsString()
     @MinLength(3)
