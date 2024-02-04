@@ -8,6 +8,5 @@ export  class LoginDTO {
 
     @Validate(NoWhitespace, { message: 'La contraseña no puede contener espacios en blanco' })
     @IsString()
-    @MinLength(6)
     readonly password: string;
 }
