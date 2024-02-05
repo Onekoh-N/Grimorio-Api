@@ -25,6 +25,7 @@ export class AuthController {
         } catch (error) {
             return res.status(HttpStatus.UNAUTHORIZED).json({
                 "success": false,
+                "statusCode": 401,
                 "message": "Error al iniciar sesion",
                 "error": error.response.message
             })

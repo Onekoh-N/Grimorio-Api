@@ -19,7 +19,7 @@ export class UsuariosController {
         return res.status(HttpStatus.CREATED).json({
             success: true,
             message: 'Usuario creado exitosamente',
-            'Created User': {
+            createdUser: {
                 'user': usuarioCreado.userName,
                 'email': usuarioCreado.email,
                 'rol': usuarioCreado.rol
@@ -45,13 +45,13 @@ export class UsuariosController {
             return res.status(HttpStatus.OK).json({
                 success: true,
                 message: 'Usuario encontrado exitosamente',
-                'foundUser': {
-                    'id': usuario._id,
-                    'user': usuario.userName,
-                    'email': usuario.email,
-                    'rol': usuario.rol,
-                    'fechaCreacion': usuario.fechaCreacion,
-                    'fechaActualizacion': usuario.fechaActualizacion
+                foundUser: {
+                    id: usuario._id,
+                    user: usuario.userName,
+                    email: usuario.email,
+                    rol: usuario.rol,
+                    fechaCreacion: usuario.fechaCreacion,
+                    fechaActualizacion: usuario.fechaActualizacion
                 }
             });
         
@@ -66,11 +66,11 @@ export class UsuariosController {
         return res.status(HttpStatus.OK).json({
             success: true,
             message: 'Usuario editado exitosamente',
-            'Edited User': {
-                'user': usuarioEditada.userName,
-                'email': usuarioEditada.email,
-                'rol': usuarioEditada.rol,
-                'fechaActualizacion': usuarioEditada.fechaActualizacion
+            editedUser: {
+                user: usuarioEditada.userName,
+                email: usuarioEditada.email,
+                rol: usuarioEditada.rol,
+                fechaActualizacion: usuarioEditada.fechaActualizacion
             }
         });
     }
@@ -98,9 +98,9 @@ async eliminarTodo(@Res() res) {
         const usuriosRestaurados = await this.usuariosService.eliminarTodosLosUsuarios();
         if (!usuriosRestaurados) throw new NotFoundException('No se pudo restaurar los usuarios');
         const usuarioEncontrado = {
-            "status": "Success",
-            "message": "Todos los usuarios han sido eliminados y se restauro el usuario administrador",
-            "usuario Administrador": usuriosRestaurados.email
+            success: true,
+            message: "Todos los usuarios han sido eliminados y se restauro el usuario administrador",
+            usuarioAdministrador: usuriosRestaurados.email
         }
         return res.status(HttpStatus.OK).json(usuarioEncontrado);
     }
