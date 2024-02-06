@@ -6,17 +6,17 @@ export class UsuarioEditadoDTO {
     @MinLength(3)
     @IsOptional()
     @Validate(NoWhitespace, { message: 'El usuario no puede contener espacios en blanco' })
-    userName: string;
+    userName?: string;
     
     @IsString()
     @MinLength(3)
     @IsOptional()
     @Validate(NoWhitespace, { message: 'La contraseña no puede contener espacios en blanco' })
-    password: string;
+    password?: string;
 
     @IsEmail()
     @IsOptional()
-    email: string;
+    email?: string;
 
     @IsEnum(Rol)
     @IsOptional()
@@ -24,9 +24,9 @@ export class UsuarioEditadoDTO {
     
     @IsDate()
     @IsOptional()
-    readonly fechaCreacion?: Date;
+    fechaCreacion?: Date;
 
     @IsDate()
     @IsOptional()
-    readonly fechaActualizacion?: Date;
+    fechaActualizacion?: Date;
 }

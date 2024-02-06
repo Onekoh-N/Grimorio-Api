@@ -52,13 +52,11 @@ export class UsuariosService {
         
     }
 
-    async modificarUsuario(usuarioId: string, usuarioEditadoDTO: UsuarioEditadoDTO) {
-        
-        const usuarioEncontrado = await this.buscarUsuario(usuarioId);        
+    async modificarUsuario(usuarioId: string, usuarioEditadoDTO: UsuarioEditadoDTO) {              
         if (usuarioEditadoDTO.password) {
             usuarioEditadoDTO.password = await hash(usuarioEditadoDTO.password, 12);
         }
-        const usuarioNuevo: UsuarioInterface = usuarioEditadoDTO;
+        const usuarioNuevo: UsuarioEditadoDTO = usuarioEditadoDTO;
         usuarioNuevo.fechaActualizacion = new Date();
         const usuarioModificada: UsuarioInterface = await this.usuarioModel.findByIdAndUpdate({_id: usuarioId}, usuarioNuevo, { new: true });
         return usuarioModificada;

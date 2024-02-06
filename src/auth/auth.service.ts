@@ -4,6 +4,7 @@ import { LoginDTO } from './dto/login.dto';
 import { compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDTO } from './dto/register.dto';
+import { AuthResDTO } from './dto/authRes.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,19 +14,30 @@ export class AuthService {
     ) { }
 
 
-    async login(registerDTO: LoginDTO) {
+    async login(registerDTO: LoginDTO): Promise<AuthResDTO> {
         try {            
             const usuarioEncontrado = await this._usersService.buscarUsuarioPorEmail(registerDTO.email);
             if (!usuarioEncontrado) { throw new UnauthorizedException({ "success": false, "message": "Credenciales incorrectas" }); }
             const validarPassword = await compare(registerDTO.password, usuarioEncontrado.password);
             if (!validarPassword) { throw new UnauthorizedException({ "success": false, "message": "Credenciales incorrectas" }); }
             const payload = {                       //Informacion del usuario que se envia en el token
-                usuario: usuarioEncontrado.userName,
+                _id: usuarioEncontrado._id,
+                userName: usuarioEncontrado.userName,
                 email: usuarioEncontrado.email,
                 rol: usuarioEncontrado.rol
             };
             const token = await this._jwtService.signAsync(payload);
-            return token;
+            const authRes: AuthResDTO = {
+                success: true,
+                message: 'Login exitoso',
+                token: token,
+                user: {
+                    userName: usuarioEncontrado.userName,
+                    email: usuarioEncontrado.email,
+                    rol: usuarioEncontrado.rol
+                }
+            }
+            return authRes;
         } catch (error) {
             throw error;
         }

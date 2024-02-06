@@ -14,13 +14,7 @@ export class AuthController {
     @Post('login')
     async login(@Body() registerDTO: LoginDTO, @Res() res) {
         try {
-            const token = await this._authService.login(registerDTO);
-        return res.status(HttpStatus.OK).json(
-            {
-                "success": true,
-                "message": "Login exitoso",
-                "token": token
-            }
+        return res.status(HttpStatus.OK).json(await this._authService.login(registerDTO)
         );
         } catch (error) {
             return res.status(HttpStatus.UNAUTHORIZED).json({
