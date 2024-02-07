@@ -1,12 +1,14 @@
 import { Rol } from "src/Modulos/users/roles/roles.enum";
 
 export class AuthResDTO {
-    success: boolean;    
+    success: boolean;
+    statusCode: number;
     message: string;
-    token: string;
-    user: {
+    error?: string;
+    token?: string;
+    userData?: {
         userName: string;
         email: string;
-        rol: Rol
-    };
+        rol: string;
+    }
 }

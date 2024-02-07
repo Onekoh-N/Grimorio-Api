@@ -15,7 +15,7 @@ export class AuthService {
 
 
     async login(registerDTO: LoginDTO): Promise<AuthResDTO> {
-        try {            
+        try {
             const usuarioEncontrado = await this._usersService.buscarUsuarioPorEmail(registerDTO.email);
             if (!usuarioEncontrado) { throw new UnauthorizedException({ "success": false, "message": "Credenciales incorrectas" }); }
             const validarPassword = await compare(registerDTO.password, usuarioEncontrado.password);
@@ -29,9 +29,10 @@ export class AuthService {
             const token = await this._jwtService.signAsync(payload);
             const authRes: AuthResDTO = {
                 success: true,
+                statusCode: 200,
                 message: 'Login exitoso',
                 token: token,
-                user: {
+                userData: {
                     userName: usuarioEncontrado.userName,
                     email: usuarioEncontrado.email,
                     rol: usuarioEncontrado.rol
@@ -39,16 +40,37 @@ export class AuthService {
             }
             return authRes;
         } catch (error) {
-            throw error;
+            const authRes: AuthResDTO = {
+                success: false,
+                statusCode: error.statusCode,
+                message: 'Error al registrar el usuario',               
+            }
+            return authRes;
         }
     }
 
 
-    register(registerDTO: RegisterDTO) {
-        try {            
-            return this._usersService.CrearUsuario(registerDTO);
+    async register(registerDTO: RegisterDTO) {
+        try {
+            const usuariocreado = await this._usersService.CrearUsuario(registerDTO);
+            const authRes: AuthResDTO = {
+                success: true,
+                statusCode: 200,
+                message: 'Registro exitoso',
+                userData: {
+                    userName: usuariocreado.userName,
+                    email: usuariocreado.email,
+                    rol: usuariocreado.rol
+                }
+            }
+            return authRes;
         } catch (error) {
-            throw new BadRequestException(error.message);
+            const authRes: AuthResDTO = {
+                success: false,
+                statusCode: error.statusCode,
+                message: 'Error al registrar el usuario',               
+            }
+            return authRes;
         }
     }
 

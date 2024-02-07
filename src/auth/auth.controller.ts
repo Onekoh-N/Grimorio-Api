@@ -1,9 +1,7 @@
 import { BadRequestException, Body, Controller, Get, HttpStatus, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDTO } from './dto/login.dto';
-import { Rol } from 'src/Modulos/users/roles/roles.enum';
 import { RegisterDTO } from './dto/register.dto';
-import { Auth } from 'src/utilidades/decorators/auth.decorator';
 import { UsuariosService } from 'src/Modulos/users/usuarios.service';
 
 @Controller('auth')
@@ -13,17 +11,8 @@ export class AuthController {
     //Login
     @Post('login')
     async login(@Body() registerDTO: LoginDTO, @Res() res) {
-        try {
-        return res.status(HttpStatus.OK).json(await this._authService.login(registerDTO)
-        );
-        } catch (error) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                statusCode: 401,
-                message: error.response.message,
-                error: "Error al iniciar sesion" 
-            })
-        }       
+        
+        return res.status(HttpStatus.OK).json(await this._authService.login(registerDTO));      
     }
     //Register
     @Post('register')
